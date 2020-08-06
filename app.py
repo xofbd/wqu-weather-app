@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    ip_address = request.environ['REMOTE_ADDR']
-    print(ip_address)
+    ip_address = request.headers['X-Forwarded-For']
+
     return greet(ip_address)
 
 
