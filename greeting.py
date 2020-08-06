@@ -14,6 +14,7 @@ def get_location(ip_address):
     """Return city, country, latitude, and longitude for a given IP address."""
     response = requests.get(f'https://ipapi.co/{ip_address}/json')
     data = response.json()
+    print(data)
     keys = ('city', 'country', 'latitude', 'longitude')
 
     return {key: data[key] for key in keys}
