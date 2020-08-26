@@ -16,7 +16,7 @@ def get_location(ip_address):
     data = response.json()
     keys = ('city', 'country', 'latitude', 'longitude')
 
-    return {key: data[key] for key in keys}
+    return {key: data.get(key) for key in keys}
 
 
 def get_temperature(lat, lon):
