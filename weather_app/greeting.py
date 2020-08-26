@@ -1,7 +1,8 @@
 import requests
 import requests_cache
 
-requests_cache.install_cache(expire_after=600)
+FLUSH_PERIOD = 10 * 60  # 10 minutes in seconds
+requests_cache.install_cache(expire_after=FLUSH_PERIOD)
 
 
 def greet(ip_address):
