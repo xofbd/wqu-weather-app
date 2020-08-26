@@ -12,7 +12,8 @@ def greet(ip_address):
 
 def get_location(ip_address):
     """Return city, country, latitude, and longitude for a given IP address."""
-    response = requests.get(f'https://ipapi.co/{ip_address}/json')
+    response = requests.get(f'https://ipapi.co/{ip_address}/json',
+                            headers={'User-Agent': 'wqu_weather_app'})
     data = response.json()
     keys = ('city', 'country', 'latitude', 'longitude')
 
