@@ -2,3 +2,4 @@ requests==2.24.0
 Flask==1.1.2
 gunicorn==20.0.4
 pytest==6.0.1
+requests-cache==0.5.2

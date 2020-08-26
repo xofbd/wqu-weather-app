@@ -1,4 +1,7 @@
 import requests
+import requests_cache
+
+requests_cache.install_cache(expire_after=600)
 
 
 def greet(ip_address):
