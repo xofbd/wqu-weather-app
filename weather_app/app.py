@@ -5,7 +5,6 @@ from flask import Flask, request
 from weather_app.greeting import greet, get_local_IP_address
 
 app = Flask(__name__)
-
 DEPLOY = os.environ.get('DEPLOY')
 
 
