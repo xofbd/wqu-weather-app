@@ -1,6 +1,6 @@
 from flask import Flask, request
 
-from greeting import greet
+from weather_app.greeting import greet
 
 app = Flask(__name__)
 
