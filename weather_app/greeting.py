@@ -34,6 +34,10 @@ def convert_to_fahr(temp_C):
     return 9 / 5 * temp_C + 32
 
 
+def get_local_IP_address():
+    return requests.get('https://api.ipify.org').text
+
+
 if __name__ == '__main__':
     import sys
 
