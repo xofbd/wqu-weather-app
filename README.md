@@ -47,5 +47,12 @@ Since this is a short demonstration of what you can do using Python for creating
 1. showing a plot of the forecast.
 1. using their location to display other location specific data.
 
+## Contributing to this project
+Please see the contributing guideline found in [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## Contributors
+Thanks to the following people who have contributed to this project:
+* [xofbd](https://github.com/xofbd)
+
 ## License
 This project is distributed under the GNU General Purpose License. Please see `LICENSE` for more information.
