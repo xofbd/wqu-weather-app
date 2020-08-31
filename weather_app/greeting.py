@@ -11,7 +11,9 @@ def greet(ip_address):
                              location_data['longitude'])
     temp_F = convert_to_fahr(temp_C)
 
-    return f"It's {temp_F :g} F in {location_data['city']}, {location_data['country']} right now."
+    return f"""<h1>It's {temp_F:.0f} &degF ({temp_C:.0f} &degC) in
+            {location_data['city']}, {location_data['country']} right now.
+            </h1>"""
 
 
 def get_location(ip_address):
@@ -28,9 +30,9 @@ def get_temperature(lat, lon):
     url_base = 'https://api.met.no/weatherapi/locationforecast/2.0/compact'
 
     response = requests.get(url_base, params={'lat': lat, 'lon': lon})
-    data = response.json()
+    data = response.json()['properties']['timeseries']
 
-    return data['properties']['timeseries'][0]['data']['instant']['details']['air_temperature']
+    return data[0]['data']['instant']['details']['air_temperature']
 
 
 def convert_to_fahr(temp_C):
