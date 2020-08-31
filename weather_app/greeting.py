@@ -11,10 +11,13 @@ def greet(ip_address):
     temp_C = get_temperature(location_data['latitude'],
                              location_data['longitude'])
     temp_F = convert_to_fahr(temp_C)
-    nl = '<br>'
-    wiki_header = "<b>Wiki Summary</b>"
-    wiki_summary = wikipedia.summary(wikipedia.search("{},{}".format(location_data['city'],location_data['country']))[0])
-    return f"It's {temp_F :g} F in {location_data['city']}, {location_data['country']} right now.{nl}{nl}{wiki_header}{nl}{wiki_summary}"
+    wiki_header = "<h2>Wikipedia Summary</h2>"
+    wiki_summary = wikipedia.summary(wikipedia.search(
+        f"{location_data['city']}, {location_data['country']}"
+    )[0])
+    return f"""<h2>It's {temp_F :.0f} &degF ({temp_C:.0f} &degC) in
+        {location_data['city']}, {location_data['country']} right now.</h2>
+        <br>{wiki_header}{wiki_summary}"""
 
 
 def get_location(ip_address):
@@ -31,9 +34,9 @@ def get_temperature(lat, lon):
     url_base = 'https://api.met.no/weatherapi/locationforecast/2.0/compact'
 
     response = requests.get(url_base, params={'lat': lat, 'lon': lon})
-    data = response.json()
+    data = response.json()['properties']['timeseries']
 
-    return data['properties']['timeseries'][0]['data']['instant']['details']['air_temperature']
+    return data[0]['data']['instant']['details']['air_temperature']
 
 
 def convert_to_fahr(temp_C):
