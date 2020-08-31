@@ -1,5 +1,6 @@
 import requests
 import requests_cache
+import wikipedia
 
 FLUSH_PERIOD = 10 * 60  # 10 minutes in seconds
 requests_cache.install_cache(expire_after=FLUSH_PERIOD)
@@ -10,8 +11,10 @@ def greet(ip_address):
     temp_C = get_temperature(location_data['latitude'],
                              location_data['longitude'])
     temp_F = convert_to_fahr(temp_C)
-
-    return f"It's {temp_F :g} F in {location_data['city']}, {location_data['country']} right now."
+    nl = '<br>'
+    wiki_header = "<b>Wiki Summary</b>"
+    wiki_summary = wikipedia.summary(wikipedia.search("{},{}".format(location_data['city'],location_data['country']))[0])
+    return f"It's {temp_F :g} F in {location_data['city']}, {location_data['country']} right now.{nl}{nl}{wiki_header}{nl}{wiki_summary}"
 
 
 def get_location(ip_address):
