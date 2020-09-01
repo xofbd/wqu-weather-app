@@ -8,21 +8,24 @@ requests_cache.install_cache(expire_after=FLUSH_PERIOD)
 
 def greet(ip_address):
     location_data = get_location(ip_address)
-    temp_C = get_temperature(location_data['latitude'],
-                             location_data['longitude'])
+    temp_C = get_temperature(location_data['lat'],
+                             location_data['lon'])
     temp_F = convert_to_fahr(temp_C)
-    nl = '<br>'
-    wiki_header = "<b>Wiki Summary</b>"
-    wiki_summary = wikipedia.summary(wikipedia.search("{},{}".format(location_data['city'],location_data['country']))[0])
-    return f"It's {temp_F :g} F in {location_data['city']}, {location_data['country']} right now.{nl}{nl}{wiki_header}{nl}{wiki_summary}"
+    wiki_header = "<h2>Wikipedia Summary</h2>"
+    wiki_query = wikipedia.search(f"""{location_data['city']},
+                                     {location_data['country']}""")[0]
+    wiki_summary = wikipedia.summary(wiki_query)
+    return f"""<h2>It's {temp_C :.0f} &degC ({temp_F :.0f} &degF) in
+        {location_data['city']}, {location_data['country']} right now.</h2>
+        <h2>{wiki_header}</h2>{wiki_summary}"""
 
 
 def get_location(ip_address):
     """Return city, country, latitude, and longitude for a given IP address."""
-    response = requests.get(f'https://ipapi.co/{ip_address}/json',
+    response = requests.get(f'http://ip-api.com/json/{ip_address}',
                             headers={'User-Agent': 'wqu_weather_app'})
     data = response.json()
-    keys = ('city', 'country', 'latitude', 'longitude')
+    keys = ('city', 'country', 'lat', 'lon')
 
     return {key: data[key] for key in keys}
 
@@ -31,9 +34,9 @@ def get_temperature(lat, lon):
     url_base = 'https://api.met.no/weatherapi/locationforecast/2.0/compact'
 
     response = requests.get(url_base, params={'lat': lat, 'lon': lon})
-    data = response.json()
+    data = response.json()['properties']['timeseries']
 
-    return data['properties']['timeseries'][0]['data']['instant']['details']['air_temperature']
+    return data[0]['data']['instant']['details']['air_temperature']
 
 
 def convert_to_fahr(temp_C):
