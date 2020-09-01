@@ -12,8 +12,8 @@ The skills and tools used are:
 When a client visits the application, it:
 
 1. gets the client's IP address.
-1. uses the IP address to look up their location.
-1. uses their location data to greet them with temperature of the city they are located in.
+2. uses the IP address to look up their location.
+3. uses their location data to greet them with temperature of the city they are located in.
 
 ## Prerequisites
 
@@ -41,7 +41,7 @@ If you are using Windows, you can:
 Alternatively, you can deploy using [Docker](https://www.docker.com/).
 
 1. `docker build -t weather_app .`
-1. `docker run -d -p 5000:5000 weather_app`
+2. `docker run -d -p 5000:5000 weather_app`
 
 ## Deploying to Heroku
 
