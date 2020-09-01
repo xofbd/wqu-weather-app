@@ -7,13 +7,13 @@ The skills and tools used are:
 * Python's `requests` package.
 * Python's `flask` web framework.
 * working with JSON.
-* modular programming
+* modular programming.
 
 When a client visits the application, it:
 
 1. gets the client's IP address.
-2. uses the IP address to look up their location.
-3. uses their location data to greet them with temperature of the city they are located in.
+1. uses the IP address to look up their location.
+1. uses their location data to greet them with temperature of the city they are located in.
 
 ## Prerequisites
 
@@ -34,14 +34,14 @@ If you are using Windows, you can:
         py -3 -m venv venv
         venv\Scripts\activate.bat
 
-2. `set FLASK_APP=weather_app/app.py` in the command line.
-3. run `python -m flask run`.
-4. open the link in the command line.
+1. `set FLASK_APP=weather_app/app.py` in the command line.
+1. run `python -m flask run`.
+1. open the link in the command line.
 
 Alternatively, you can deploy using [Docker](https://www.docker.com/).
 
 1. `docker build -t weather_app .`
-2. `docker run -d -p 5000:5000 weather_app`
+1. `docker run -d -p 5000:5000 weather_app`
 
 ## Deploying to Heroku
 
@@ -62,11 +62,16 @@ Since this is a short demonstration of what you can do using Python for creating
 1. using a client's location to display other location specific data.
 
 ## Contributing to this project
+
 Please see the contributing guideline found in [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Contributors
+
 Thanks to the following people who have contributed to this project:
+
 * [xofbd](https://github.com/xofbd)
+* [gammaG2](https://github.com/gammaG2)
+* [Tim](https://github.com/Tim-Abwao)
 
 ## License
 
