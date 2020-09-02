@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WQU Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 2% 5%;
+            max-width: 900px;
+        }
+
+        .text-content {
+            font-style: oblique;
+        }
+
+        .graphs {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="text-content">
+        <h1>{{ weather_info.headline|safe }}</h1>
+        <p>(according to your IP address {{weather_info['ip_address']}})</p>
+    </div>
+    <div class="graphs">
+        {% for graph in weather_info['graphs'] %}
+        {{ graph.getvalue()|safe }}
+        {% endfor %}
+    </div>
+    <h2>Wikipedia Summary</h2>
+    <p>{{ weather_info['summary'] }}</p>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</body>
+
+</html>
