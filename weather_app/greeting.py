@@ -4,7 +4,6 @@ import wikipedia
 import pandas as pd
 import plotly.express as px
 from io import StringIO
-from flask import render_template
 
 FLUSH_PERIOD = 10 * 60  # 10 minutes in seconds
 requests_cache.install_cache(expire_after=FLUSH_PERIOD)
@@ -23,13 +22,13 @@ def greet(ip_address):
 
     weather_info = {
         'graphs': plot_forecast(temp_data),
-        'headline': f"""<h2>It's {temp_C :.0f} &degC ({temp_F :.0f} &degF) in
+        'headline': f"""It's {temp_C :.0f} &degC ({temp_F :.0f} &degF) in
                     {location_data['city']}, {location_data['country']}
                     right now.""",
         'summary': wiki_summary,
         'ip_address': ip_address
     }
-    return render_template('index.html', weather_info=weather_info)
+    return weather_info
 
 
 def get_location(ip_address):
