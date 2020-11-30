@@ -4,28 +4,26 @@ import wikipedia
 import pandas as pd
 import plotly.express as px
 from io import StringIO
+import folium
 
 FLUSH_PERIOD = 10 * 60  # 10 minutes in seconds
 requests_cache.install_cache(expire_after=FLUSH_PERIOD)
 
 
 def greet(ip_address):
-    location_data = get_location(ip_address)
-    temp_data = get_temperature(location_data['lat'],
-                                location_data['lon'],
-                                location_data['timezone'])
+    location = get_location(ip_address)
+    temp_data = get_temperature(location['lat'], location['lon'],
+                                location['timezone'])
     temp_C = temp_data.iloc[0]
     temp_F = convert_to_fahr(temp_C)
-    wiki_query = wikipedia.search(f"""{location_data['city']},
-                                  {location_data['country']}""")[0]
-    wiki_summary = wikipedia.summary(wiki_query)
 
     weather_info = {
         'graphs': plot_forecast(temp_data),
-        'headline': f"""It's {temp_C :.0f} &degC ({temp_F :.0f} &degF) in
-                    {location_data['city']}, {location_data['country']}
+        'map': draw_map(location['lat'], location['lon']),
+        'headline': f"""It's {temp_C :.0f} &deg;C ({temp_F :.0f} &deg;F) in
+                    {location['city']}, {location['country']}
                     right now.""",
-        'summary': wiki_summary,
+        'summary': get_wikipedia_info(location['city'], location['country']),
         'ip_address': ip_address
     }
     return weather_info
@@ -64,23 +62,31 @@ def plot_forecast(data):
     temp24H = data[:24]
     temp24H_graph = StringIO()
     fig = px.line(y=temp24H, x=temp24H.index.astype(str),
-                  title="24 Hour Forecast", width=700, height=500)
-    fig.update_xaxes(title_text='Time')
-    fig.update_yaxes(title_text='Air temperature in deg C')
-
-    fig.write_html(temp24H_graph, include_plotlyjs='cdn',
-                   full_html=False)
+                  title="24 Hour Forecast")
+    fig.update_xaxes(title_text='Time', fixedrange=True)
+    fig.update_yaxes(title_text='Air temperature in deg C', fixedrange=True)
+    fig.update_layout(paper_bgcolor='azure', plot_bgcolor='azure')
+    fig.write_html(temp24H_graph, include_plotlyjs='cdn', full_html=False)
 
     temp10D = data.resample('1D').agg(['max', 'min'])
     temp10D_graph = StringIO()
     fig2 = px.bar(temp10D, color_discrete_sequence=['orangered', 'cyan'],
-                  barmode='group', title="10 Day Forecast", width=700,
-                  height=500)
-    fig2.update_xaxes(title_text='Day')
-    fig2.update_yaxes(title_text='Air temperature in deg C')
-    fig2.write_html(temp10D_graph, include_plotlyjs='cdn',
-                    full_html=False)
+                  barmode='group', title="10 Day Forecast")
+    fig2.update_xaxes(title_text='Day', fixedrange=True)
+    fig2.update_yaxes(title_text='Air temperature in deg C', fixedrange=True)
+    fig2.update_layout(paper_bgcolor='azure', plot_bgcolor='azure')
+    fig2.write_html(temp10D_graph, include_plotlyjs='cdn', full_html=False)
     return temp24H_graph, temp10D_graph
+
+
+def get_wikipedia_info(*location):
+    wiki_query = wikipedia.search(f"{location}")[0]
+    return wikipedia.summary(wiki_query, sentences=5)
+
+
+def draw_map(lat, lon):
+    """Draw the map of a given location latitude and longitude."""
+    return folium.Map(location=[lat, lon], zoom_start=14)._repr_html_()
 
 
 def convert_to_fahr(temp_C):

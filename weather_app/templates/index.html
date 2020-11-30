@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
+            background-color: azure;
             margin: 2% 5%;
-            max-width: 900px;
         }
 
         .text-content {
@@ -15,7 +15,31 @@
         }
 
         .graphs {
-            overflow-x: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: 35% 60%;
+            gap: 5%;
+        }
+
+        @media screen and (max-width: 1024px) {
+            body {
+                width: 70%;
+            }
+
+            .graphs,
+            .summary {
+                display: block;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                width: 90%;
+            }
         }
     </style>
 </head>
@@ -25,13 +49,21 @@
         <h1>{{ weather_info.headline|safe }}</h1>
         <p>(according to your IP address {{weather_info['ip_address']}})</p>
     </div>
+
     <div class="graphs">
         {% for graph in weather_info['graphs'] %}
         {{ graph.getvalue()|safe }}
         {% endfor %}
     </div>
-    <h2>Wikipedia Summary</h2>
-    <p>{{ weather_info['summary'] }}</p>
+    <div class="summary">
+        <div>
+            <h2>Wikipedia Summary</h2>
+            <p>{{ weather_info['summary'] }}</p>
+        </div>
+
+        {{ weather_info['map']|safe }}
+    </div>
+
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </body>
