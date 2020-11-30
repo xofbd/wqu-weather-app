@@ -44,7 +44,8 @@ def get_location(ip_address):
 def get_temperature(lat, lon, timezone):
     url_base = 'https://api.met.no/weatherapi/locationforecast/2.0/compact'
 
-    response = requests.get(url_base, params={'lat': lat, 'lon': lon})
+    response = requests.get(url_base, params={'lat': lat, 'lon': lon},
+                            headers={'User-Agent': 'wqu_weather_app'})
     data = response.json()['properties']['timeseries']
 
     times = [entry['time'] for entry in data]
@@ -88,7 +89,8 @@ def convert_to_fahr(temp_C):
 
 
 def get_local_IP_address():
-    return requests.get('https://api.ipify.org').text
+    return requests.get('https://api.ipify.org',
+                        headers={'User-Agent': 'wqu_weather_app'}).text
 
 
 if __name__ == '__main__':
