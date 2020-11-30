@@ -8,7 +8,7 @@ DEPLOY = os.environ.get('DEPLOY')
 
 @app.route('/')
 def main():
-    if DEPLOY == 'heroku':
+    if DEPLOY == 'heroku':  # env variable set when deploying to heroku
         ip_address = request.headers['X-Forwarded-For']
     else:
         ip_address = get_local_IP_address()
