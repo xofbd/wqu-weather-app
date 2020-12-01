@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath weather_app app:app
+web: gunicorn weather_app:app
