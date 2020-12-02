@@ -13,7 +13,7 @@ When a client visits the application, it:
 
 1. gets the client's IP address.
 1. uses the IP address to look up their location.
-1. uses their location data to greet them with temperature of the city they are located in.
+1. uses their location data to greet them with the temperature of the city they are located in.
 
 ## Prerequisites
 
@@ -32,16 +32,16 @@ If you are using Windows, you can:
 1. create and activate the virtual environment.
 
         py -3 -m venv venv
-        venv\Scripts\activate.bat
+        venv\Scripts\activate
 
-1. `set FLASK_APP=weather_app/app.py` in the command line.
+1. `set FLASK_APP=weather_app` in the command line.
 1. run `python -m flask run`.
 1. open the link in the command line.
 
 Alternatively, you can deploy using [Docker](https://www.docker.com/).
 
 1. `docker build -t weather_app .`
-1. `docker run -d -p 5000:5000 weather_app`
+1. `docker run -d -p 5000:5000 --name flask_weather_app weather_app`
 
 ## Deploying to Heroku
 
