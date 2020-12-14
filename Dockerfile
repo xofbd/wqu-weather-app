@@ -7,6 +7,6 @@ RUN pip install --upgrade pip && \
 COPY weather_app ./weather_app
 EXPOSE 5000
 CMD export FLASK_APP="weather_app" && \
-    export FLASK_DEBUG=1 && \
+    export FLASK_ENV=development && \
     export DEPLOY=local && \
     flask run --host=0.0.0.0

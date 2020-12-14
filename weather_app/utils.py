@@ -111,9 +111,13 @@ def plot_forecast(data):
     fig.update_xaxes(title_text='Time', fixedrange=True)
     fig.update_yaxes(title_text='Air temperature in deg C', fixedrange=True)
     fig.update_layout(paper_bgcolor='azure', plot_bgcolor='azure')
+    fig.update_traces(
+        hovertemplate='<b>Time</b>: %{x}<br><b>Temp</b>: %{y}°C<br>')
     # Write graph to text buffer
     temp24H_graph = StringIO()
-    fig.write_html(temp24H_graph, include_plotlyjs='cdn', full_html=False)
+    fig.write_html(
+        temp24H_graph, full_html=False,
+        include_plotlyjs='https://cdn.plot.ly/plotly-basic-1.58.2.min.js')
 
     temp10D = data.resample('1D').agg(['max', 'min'])
     fig2 = px.bar(temp10D, color_discrete_sequence=['orangered', 'cyan'],
@@ -122,9 +126,13 @@ def plot_forecast(data):
     fig2.update_xaxes(title_text='Day', fixedrange=True)
     fig2.update_yaxes(title_text='Air temperature in deg C', fixedrange=True)
     fig2.update_layout(paper_bgcolor='azure', plot_bgcolor='azure')
+    fig2.update_traces(
+        hovertemplate='<b>Date</b>: %{x}<br><b>Temp</b>: %{y}°C<br>')
     # Write graph to text buffer
     temp10D_graph = StringIO()
-    fig2.write_html(temp10D_graph, include_plotlyjs='cdn', full_html=False)
+    fig2.write_html(
+        temp10D_graph, full_html=False,
+        include_plotlyjs='https://cdn.plot.ly/plotly-basic-1.58.2.min.js')
     return temp24H_graph, temp10D_graph
 
 
@@ -166,7 +174,7 @@ def convert_to_fahr(temp_C):
     return 9 / 5 * temp_C + 32
 
 
-def get_local_IP_address():
+def get_external_IP_address():
     """
     Get the client's IP address via a GET request to an API service.
 
@@ -181,4 +189,4 @@ def get_local_IP_address():
 if __name__ == '__main__':
     import sys
 
-    print(greet(sys.argv[1]))
+    print(greet(sys.argv[1]))  # e.g. python utils.py 8.8.8.8

@@ -5,7 +5,7 @@ if [[ -e venv ]]; then
 fi
 
 export FLASK_APP="weather_app"
-export FLASK_DEBUG=1
+export FLASK_ENV=development
 export DEPLOY=local
 
 HOST=${1:-127.0.0.1}
